@@ -161,6 +161,7 @@ th,td{
           <th>角色</th>
           <th>登场</th>
           <th>胜场</th>
+          <th>登场率</th>
           <th>胜率</th>
         </tr>
       </thead>
@@ -329,6 +330,7 @@ function updateStats(){
         <td>${r}</td>
         <td>${stats[i].appear}</td>
         <td>${stats[i].win}</td>
+        <td>${Math.round(100 * stats[i].appear / matches.length)}%</td>
         <td>${Math.round(100 * stats[i].win / (stats[i].win + stats[i].lose))}%</td>
       `
       body.appendChild(tr)
