@@ -347,7 +347,7 @@ function updateStats(){
   roleDatas.forEach((data)=>{
     const tr=document.createElement("tr");
     const appearSymbol = data[1] == appearArr[0] ? "🥇 " : data[1] == appearArr[1] ? "🥈 " : data[1] == appearArr[2] ? "🥉 " : "";
-    const winSymbol = data[1] == winArr[0] ? "🥇 " : data[1] == winArr[1] ? "🥈 " : data[1] == winArr[2] ? "🥉 " : "";
+    const winSymbol = data[2] == winArr[0] ? "🥇 " : data[2] == winArr[1] ? "🥈 " : data[2] == winArr[2] ? "🥉 " : "";
     tr.innerHTML=`
       <td>${data[0]}</td>
       <td>${appearSymbol}${data[1]}</td>
