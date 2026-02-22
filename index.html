@@ -339,21 +339,25 @@ function updateStats(){
     }
   })
 
-  let appearArr = roleDatas.map(el => el[1]);
+  let appearArr = roleDatas.map(el => el[1]).filter((el, index, arr)=>arr.indexOf(el) == index);
   appearArr.sort((a, b) => b-a);
-  let winArr = roleDatas.map(el => el[2]);
+  let winArr = roleDatas.map(el => el[2]).filter((el, index, arr)=>arr.indexOf(el) == index);
   winArr.sort((a, b) => b-a);
+  let winRateArr = roleDatas.map(el => el[4]).filter((el, index, arr)=>arr.indexOf(el) == index);
+  winRateArr.sort((a, b) => b-a);
+  console.log("winRateArr", winRateArr)
 
   roleDatas.forEach((data)=>{
     const tr=document.createElement("tr");
     const appearSymbol = data[1] == appearArr[0] ? "🥇 " : data[1] == appearArr[1] ? "🥈 " : data[1] == appearArr[2] ? "🥉 " : "";
     const winSymbol = data[2] == winArr[0] ? "🥇 " : data[2] == winArr[1] ? "🥈 " : data[2] == winArr[2] ? "🥉 " : "";
+    const winRateSymbol = data[4] == winRateArr[0] ? "🥇 " : data[4] == winRateArr[1] ? "🥈 " : data[4] == winRateArr[2] ? "🥉 " : "";
     tr.innerHTML=`
       <td>${data[0]}</td>
       <td>${appearSymbol}${data[1]}</td>
       <td>${winSymbol}${data[2]}</td>
       <td>${data[3]}%</td>
-      <td>${data[4]}%</td>
+      <td>${winRateSymbol}${data[4]}%</td>
     `
     body.appendChild(tr)
   })
