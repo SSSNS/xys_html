@@ -152,9 +152,9 @@ th,td{
   </div>
 </div>
 
-<div class="panel">
-  <h2>统计结果</h2>
-  <div id="resultArea">
+<div class="panel" id="resultArea">
+  <h2>统计结果(<span id="matchDesc"></span>)</h2>
+  <div>
     <table>
       <thead>
         <tr>
@@ -323,18 +323,39 @@ function updateStats(){
   const body=document.getElementById("resultBody")
   body.innerHTML=""
 
+  const desc=document.getElementById("matchDesc")
+  desc.innerHTML=`共${matches.length}场`
+
+  const roleDatas = [];
   roles.forEach((r,i)=>{
     if(stats[i].appear>0){
-      const tr=document.createElement("tr")
-      tr.innerHTML=`
-        <td>${r}</td>
-        <td>${stats[i].appear}</td>
-        <td>${stats[i].win}</td>
-        <td>${Math.round(100 * stats[i].appear / matches.length)}%</td>
-        <td>${Math.round(100 * stats[i].win / (stats[i].win + stats[i].lose))}%</td>
-      `
-      body.appendChild(tr)
+      roleDatas.push([
+        r, // 角色名
+        stats[i].appear, // 登场数 
+        stats[i].win, // 胜场
+        Math.round(100 * stats[i].appear / matches.length), // 登场率
+        Math.round(100 * stats[i].win / (stats[i].win + stats[i].lose)), // 胜率
+      ]);
     }
+  })
+
+  let appearArr = roleDatas.map(el => el[1]);
+  appearArr.sort((a, b) => b-a);
+  let winArr = roleDatas.map(el => el[2]);
+  winArr.sort((a, b) => b-a);
+
+  roleDatas.forEach((data)=>{
+    const tr=document.createElement("tr");
+    const appearSymbol = data[1] == appearArr[0] ? "🥇 " : data[1] == appearArr[1] ? "🥈 " : data[1] == appearArr[2] ? "🥉 " : "";
+    const winSymbol = data[1] == winArr[0] ? "🥇 " : data[1] == winArr[1] ? "🥈 " : data[1] == winArr[2] ? "🥉 " : "";
+    tr.innerHTML=`
+      <td>${data[0]}</td>
+      <td>${appearSymbol}${data[1]}</td>
+      <td>${winSymbol}${data[2]}</td>
+      <td>${data[3]}%</td>
+      <td>${data[4]}%</td>
+    `
+    body.appendChild(tr)
   })
 }
 
